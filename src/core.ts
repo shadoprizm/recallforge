@@ -13,11 +13,38 @@ export type MemoryCard = {
 };
 
 const TYPE_RULES: Array<{ type: MemoryCard["type"]; weight: number; terms: string[] }> = [
-  { type: "fix", weight: 5, terms: ["fixed", "fix", "resolved", "root cause", "patched", "regression"] },
+  { type: "fix", weight: 5, terms: ["fixed", "fix", "resolved", "root cause", "patched", "regression", "bug"] },
   { type: "decision", weight: 4, terms: ["decided", "decision", "chose", "selected", "because", "tradeoff"] },
-  { type: "command", weight: 3, terms: ["npm ", "pnpm ", "curl ", "gh ", "git ", "sqlite3 ", "python3 "] },
-  { type: "todo", weight: 3, terms: ["todo", "next step", "follow up", "remaining", "needs"] }
+  { type: "command", weight: 3, terms: ["npm", "pnpm", "curl", "gh", "git", "sqlite3", "python3", "npx"] },
+  { type: "todo", weight: 3, terms: ["todo", "next step", "follow up", "remaining", "needs", "blocked"] }
 ];
+
+const MAX_EXCERPT_LENGTH = 480;
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Word-boundary matching so short terms like "fix" or "git" only match whole
+// words ("fix", "fixes") and not substrings inside unrelated words
+// ("prefix", "suffix", "fixture", "legit", "chosen").
+const TERM_MATCHERS = new Map<string, RegExp>();
+function termMatches(lowered: string, term: string): boolean {
+  let regex = TERM_MATCHERS.get(term);
+  if (!regex) {
+    regex = new RegExp(`\\b${escapeRegExp(term)}\\b`);
+    TERM_MATCHERS.set(term, regex);
+  }
+  return regex.test(lowered);
+}
+
+function truncateExcerpt(text: string): string {
+  if (text.length <= MAX_EXCERPT_LENGTH) return text;
+  const cut = text.slice(0, MAX_EXCERPT_LENGTH);
+  const lastBreak = Math.max(cut.lastIndexOf(" "), cut.lastIndexOf("\n"));
+  const safeCut = lastBreak > MAX_EXCERPT_LENGTH * 0.6 ? cut.slice(0, lastBreak) : cut;
+  return `${safeCut.trimEnd()}…`;
+}
 
 export function splitTranscript(text: string): string[] {
   return text
@@ -37,7 +64,7 @@ export function extractMemoryCards(inputs: TranscriptInput[], limit = 18): Memor
       const matches = TYPE_RULES
         .map((rule) => ({
           type: rule.type,
-          score: rule.terms.reduce((sum, term) => sum + (lowered.includes(term) ? rule.weight : 0), 0)
+          score: rule.terms.reduce((sum, term) => sum + (termMatches(lowered, term) ? rule.weight : 0), 0)
         }))
         .filter((match) => match.score > 0)
         .sort((a, b) => b.score - a.score);
@@ -51,7 +78,7 @@ export function extractMemoryCards(inputs: TranscriptInput[], limit = 18): Memor
         source: input.name,
         type: best.type,
         title,
-        excerpt: chunk.slice(0, 420),
+        excerpt: truncateExcerpt(chunk),
         score: best.score + Math.min(5, Math.floor(chunk.length / 180))
       });
     });
