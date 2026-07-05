@@ -8,10 +8,36 @@ const apiKeyEl = document.querySelector("#api-key");
 
 const rules = [
   { type: "fix", weight: 5, terms: ["fixed", "fix", "resolved", "root cause", "patched", "regression", "bug"] },
-  { type: "decision", weight: 4, terms: ["decided", "decision", "chose", "selected", "because", "tradeoff", "selected product"] },
-  { type: "command", weight: 3, terms: ["npm ", "pnpm ", "curl ", "gh ", "git ", "sqlite3 ", "python3 ", "npx "] },
+  { type: "decision", weight: 4, terms: ["decided", "decision", "chose", "selected", "because", "tradeoff"] },
+  { type: "command", weight: 3, terms: ["npm", "pnpm", "curl", "gh", "git", "sqlite3", "python3", "npx"] },
   { type: "todo", weight: 3, terms: ["todo", "next step", "follow up", "remaining", "needs", "blocked"] }
 ];
+
+const MAX_EXCERPT_LENGTH = 480;
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Word-boundary matching so short terms like "fix" or "git" only match whole words
+// ("fix", "fixes") and not substrings inside unrelated words ("prefix", "fixture", "chosen").
+const termMatchers = new Map();
+function termMatches(lowered, term) {
+  let regex = termMatchers.get(term);
+  if (!regex) {
+    regex = new RegExp(`\\b${escapeRegExp(term)}\\b`);
+    termMatchers.set(term, regex);
+  }
+  return regex.test(lowered);
+}
+
+function truncateExcerpt(text) {
+  if (text.length <= MAX_EXCERPT_LENGTH) return text;
+  const cut = text.slice(0, MAX_EXCERPT_LENGTH);
+  const lastBreak = Math.max(cut.lastIndexOf(" "), cut.lastIndexOf("\n"));
+  const safeCut = lastBreak > MAX_EXCERPT_LENGTH * 0.6 ? cut.slice(0, lastBreak) : cut;
+  return `${safeCut.trimEnd()}…`;
+}
 
 let cards = [];
 
@@ -54,7 +80,7 @@ function extractCards(inputs) {
       const matches = rules
         .map((rule) => ({
           type: rule.type,
-          score: rule.terms.reduce((sum, term) => sum + (lowered.includes(term) ? rule.weight : 0), 0)
+          score: rule.terms.reduce((sum, term) => sum + (termMatches(lowered, term) ? rule.weight : 0), 0)
         }))
         .filter((match) => match.score > 0)
         .sort((a, b) => b.score - a.score);
@@ -66,7 +92,7 @@ function extractCards(inputs) {
         source: input.name,
         type: best.type,
         title: summarizeTitle(chunk, best.type),
-        excerpt: chunk.slice(0, 420),
+        excerpt: truncateExcerpt(chunk),
         score: best.score + Math.min(5, Math.floor(chunk.length / 180))
       });
     });
