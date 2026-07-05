@@ -1,0 +1,415 @@
+:root {
+  color-scheme: dark;
+  --bg: #08090d;
+  --panel: #11141c;
+  --panel-2: #161b27;
+  --text: #f5f7fb;
+  --muted: #aab3c4;
+  --line: #293142;
+  --accent: #66e3c4;
+  --accent-2: #8ea7ff;
+  --warn: #ffd166;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 0%, rgba(102, 227, 196, 0.16), transparent 28%), var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px clamp(18px, 4vw, 56px);
+  background: rgba(8, 9, 13, 0.86);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand,
+nav,
+.hero-actions,
+.input-row,
+.controls,
+footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand {
+  font-weight: 800;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #07100d;
+  font-size: 0.85rem;
+}
+
+nav {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+.hero {
+  min-height: 84vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.8fr);
+  gap: clamp(28px, 5vw, 70px);
+  align-items: center;
+  padding: clamp(56px, 8vw, 110px) clamp(18px, 6vw, 82px) 40px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 780px;
+  margin-bottom: 18px;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 0.96;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  line-height: 1.03;
+}
+
+h3 {
+  margin-bottom: 8px;
+}
+
+.subhead {
+  max-width: 680px;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.55;
+}
+
+.button {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 16px;
+  color: var(--text);
+  background: #151a24;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.button.primary {
+  border: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #07100d;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.domain {
+  margin-top: 18px;
+  color: var(--muted);
+}
+
+.hero-panel,
+.input-pane,
+.output-pane,
+.feature-grid article,
+.price-card {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+}
+
+.hero-panel {
+  padding: 18px;
+}
+
+.panel-top {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.panel-top span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.search-preview,
+.memory-card {
+  border-radius: 8px;
+  background: #0c1018;
+  padding: 14px;
+  color: var(--muted);
+}
+
+.memory-card {
+  margin-top: 12px;
+}
+
+.memory-card strong {
+  color: var(--accent);
+}
+
+.memory-card.alt strong {
+  color: var(--accent-2);
+}
+
+.band,
+.workspace {
+  padding: 76px clamp(18px, 6vw, 82px);
+}
+
+.section-heading {
+  max-width: 780px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.feature-grid article,
+.price-card {
+  padding: 22px;
+}
+
+.feature-grid p,
+.price-card p,
+.steps {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.icon {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.workspace {
+  background: #0b0d13;
+}
+
+.tool-head,
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1fr);
+  gap: 28px;
+  align-items: end;
+}
+
+.tool-head {
+  margin-bottom: 18px;
+}
+
+.tool-head .button {
+  justify-self: end;
+}
+
+.tool-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.84fr) minmax(0, 1.16fr);
+  gap: 18px;
+}
+
+.input-pane,
+.output-pane {
+  padding: 18px;
+}
+
+label {
+  display: block;
+  margin: 14px 0 8px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+textarea,
+input,
+select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #080b11;
+  color: var(--text);
+  padding: 12px;
+  font: inherit;
+}
+
+textarea {
+  min-height: 360px;
+  resize: vertical;
+}
+
+.input-row {
+  margin-top: 12px;
+  justify-content: space-between;
+}
+
+.controls {
+  align-items: stretch;
+}
+
+.controls input {
+  min-width: 180px;
+}
+
+.stats {
+  margin: 16px 0;
+  color: var(--muted);
+}
+
+.cards {
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #0b0f17;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.pill {
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: rgba(102, 227, 196, 0.12);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.card h3 {
+  margin: 10px 0;
+}
+
+.card p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.steps {
+  padding-left: 22px;
+}
+
+.steps li {
+  margin: 14px 0;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.price {
+  color: var(--accent);
+  font-size: 2.4rem;
+  font-weight: 900;
+}
+
+.featured {
+  border-color: rgba(102, 227, 196, 0.42);
+}
+
+footer {
+  justify-content: space-between;
+  padding: 28px clamp(18px, 6vw, 82px);
+  color: var(--muted);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+footer a {
+  color: var(--accent);
+}
+
+@media (max-width: 920px) {
+  .hero,
+  .tool-layout,
+  .tool-head,
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tool-head .button {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header,
+  nav,
+  .controls,
+  .input-row,
+  footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .feature-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+}

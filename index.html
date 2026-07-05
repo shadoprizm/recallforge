@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RecallForge — Agent Memory Search</title>
+    <meta name="description" content="Search AI agent transcripts and extract reusable decisions, fixes, commands, and follow-ups." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="RecallForge home">
+        <span class="brand-mark">RF</span>
+        <span>RecallForge</span>
+      </a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#try">Try It Now</a>
+        <a href="#pricing">Pricing</a>
+        <a href="https://github.com/shadoprizm/recallforge" id="repo-link">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Local-first AI agent memory</p>
+          <h1>Search what your agents already learned.</h1>
+          <p class="subhead">
+            RecallForge turns Codex, Claude Code, Cursor, and OpenClaw transcripts into searchable cards for reusable fixes,
+            decisions, commands, and next steps.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#try">Try It Now</a>
+            <a class="button secondary" href="#pricing">See pricing</a>
+          </div>
+          <p class="domain">Recommended domain: recallforge.io</p>
+        </div>
+        <div class="hero-panel" aria-label="Product preview">
+          <div class="panel-top">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="search-preview">query: deployment regression</div>
+          <div class="memory-card">
+            <strong>Reusable Fix</strong>
+            <p>Move GitHub Pages source to /web, then verify 200 with curl before calling the build shipped.</p>
+          </div>
+          <div class="memory-card alt">
+            <strong>Decision</strong>
+            <p>Keep the MVP browser-only until teams ask for hosted sync and scheduled indexing.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="features">
+        <div class="section-heading">
+          <p class="eyebrow">Built for agent-heavy builders</p>
+          <h2>Stop losing hard-won fixes inside old chats.</h2>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <span class="icon">01</span>
+            <h3>Transcript Import</h3>
+            <p>Paste logs or upload Markdown, JSONL, text, and terminal transcripts from your coding agents.</p>
+          </article>
+          <article>
+            <span class="icon">02</span>
+            <h3>Memory Cards</h3>
+            <p>Extract decisions, reusable fixes, command patterns, and follow-ups with clear source labels.</p>
+          </article>
+          <article>
+            <span class="icon">03</span>
+            <h3>Local Search</h3>
+            <p>Filter by query and card type instantly without sending private project history to a server.</p>
+          </article>
+          <article>
+            <span class="icon">04</span>
+            <h3>AI Polish</h3>
+            <p>Use your own API key to rewrite rough session chunks into clean reusable engineering notes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="workspace" id="try">
+        <div class="tool-head">
+          <div>
+            <p class="eyebrow">Try it now</p>
+            <h2>Paste a transcript. Forge reusable memory.</h2>
+          </div>
+          <button class="button secondary" id="load-sample" type="button">Load Sample</button>
+        </div>
+
+        <div class="tool-layout">
+          <div class="input-pane">
+            <label for="transcript">Transcript</label>
+            <textarea id="transcript" spellcheck="false" placeholder="Paste agent logs, PR notes, terminal output, or session summaries here..."></textarea>
+            <div class="input-row">
+              <input id="file-input" type="file" multiple accept=".txt,.md,.json,.jsonl,.log" />
+              <button class="button primary" id="extract" type="button">Extract Cards</button>
+            </div>
+            <label for="api-key">Optional OpenAI API key</label>
+            <input id="api-key" type="password" placeholder="sk-... used only in your browser" />
+            <button class="button secondary" id="ai-polish" type="button">AI Polish Top Card</button>
+          </div>
+
+          <div class="output-pane">
+            <div class="controls">
+              <input id="search" type="search" placeholder="Search cards..." />
+              <select id="type-filter" aria-label="Filter card type">
+                <option value="all">All cards</option>
+                <option value="fix">Fixes</option>
+                <option value="decision">Decisions</option>
+                <option value="command">Commands</option>
+                <option value="todo">Follow-ups</option>
+              </select>
+              <button class="button secondary" id="export" type="button">Export Markdown</button>
+            </div>
+            <div class="stats" id="stats">No cards yet.</div>
+            <div class="cards" id="cards"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band split" id="pricing">
+        <div>
+          <p class="eyebrow">How it works</p>
+          <h2>Three steps from transcript mess to reusable memory.</h2>
+          <ol class="steps">
+            <li>Paste or upload transcript files from your agent runs.</li>
+            <li>RecallForge extracts high-signal cards and ranks them.</li>
+            <li>Search, polish, and export the cards into your team knowledge base.</li>
+          </ol>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-card">
+            <h3>Free</h3>
+            <p class="price">$0</p>
+            <p>Browser-only transcript import, local extraction, search, filters, and Markdown export.</p>
+          </article>
+          <article class="price-card featured">
+            <h3>Pro</h3>
+            <p class="price">$12/mo</p>
+            <p>Hosted encrypted sync, scheduled indexing, multi-agent importers, team libraries, and AI rewrite packs.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Built by North Star Holdings</span>
+      <a href="https://astrawebdev.com">astrawebdev.com</a>
+    </footer>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
