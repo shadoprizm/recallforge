@@ -30,6 +30,7 @@ Then open `http://127.0.0.1:4173`.
 
 ## Deployment
 
-The public MVP is deployed as a static GitHub Pages site from `web/`.
+- **Primary:** https://recallforge-ten.vercel.app (Vercel, deployed from `web/`)
+- **Mirror:** https://shadoprizm.github.io/recallforge/ (GitHub Pages, via the `gh-pages` branch — this branch does NOT auto-update from `main`; any fix to `web/` must be pushed to it separately or it goes stale)
 
 Built by North Star Holdings.
