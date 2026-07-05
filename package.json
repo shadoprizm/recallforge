@@ -1,0 +1,24 @@
+{
+  "name": "recallforge",
+  "version": "0.1.0",
+  "description": "Local-first agent transcript search and reusable fix extractor.",
+  "type": "module",
+  "scripts": {
+    "start": "npx http-server web -p 4173",
+    "build": "tsc -p tsconfig.json",
+    "test": "node tests/core.test.mjs"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "transcripts",
+    "memory",
+    "search"
+  ],
+  "author": "North Star Holdings",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "typescript": "^5.5.4"
+  }
+}
